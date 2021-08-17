@@ -6,6 +6,12 @@ export const GET_CHECK_EMAIL = gql`
  }
 `;
 
+export const GET_CHECK_NICKNAME = gql`
+ query getCheckNickName($nickName: String!) {
+  getCheckNickName(nickName: $nickName)
+ }
+`;
+
 export const CREATE_USER = gql`
  mutation createUser(
   $name: String!

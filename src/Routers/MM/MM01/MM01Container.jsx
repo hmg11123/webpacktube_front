@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import MM01Presenter from "./MM01Presenter";
 import storageRef from "../../../filebase";
 import { useInput, useMobileInput, useBirthInput } from "../../../Hooks/useInput";
-import { CREATE_USER, GET_CHECK_EMAIL } from "./MM01Queries";
+import { CREATE_USER, GET_CHECK_EMAIL, GET_CHECK_NICKNAME } from "./MM01Queries";
 import { useMutation, useQuery } from "react-apollo-hooks";
 
 const MM01Container = ({ history }) => {
@@ -17,6 +17,8 @@ const MM01Container = ({ history }) => {
  const isCheck = useInput(false);
  const originCheck = useInput("");
  const inputCheck = useInput("");
+ const isNickNameData = useInput(true);
+ const isNickName = useInput(false);
 
  const [isDialogOpen, setIsDialogOpen] = useState(false);
  const [imagePath, setImagePath] = useState(
@@ -32,6 +34,15 @@ const MM01Container = ({ history }) => {
   variables: { email: inputEmail.value },
  });
 
+ const {
+  data: nickNameData,
+  loading: nickNameLoading,
+  refetch: nickNameRefetch,
+ } = useQuery(GET_CHECK_NICKNAME, {
+  skip: isNickNameData.value,
+  variables: { nickName: inputNickName.value },
+ });
+
  const [createUserMutation] = useMutation(CREATE_USER);
 
  const moveLinkHandler = (link) => {
@@ -44,6 +55,14 @@ const MM01Container = ({ history }) => {
    return;
   }
   isCheckData.setValue(false);
+ };
+
+ const checkNickNameHandler = () => {
+  if (!inputNickName.value || inputNickName.value.trim() === "") {
+   alert("닉네임은 필수 입력사항 입니다.");
+   return;
+  }
+  isNickNameData.setValue(false);
  };
 
  const _isDialogOpenToggle = () => {
@@ -130,6 +149,10 @@ const MM01Container = ({ history }) => {
    alert("이메일을 인증해주세요.");
    return;
   }
+  if (!isNickName.value) {
+   alert("닉네임을 사용 가능한지 확인 해주세요.");
+   return;
+  }
   const { data } = await createUserMutation({
    variables: {
     name: inputName.value,
@@ -154,14 +177,36 @@ const MM01Container = ({ history }) => {
  useEffect(() => {
   if (!isCheckData.value) {
    if (checkData) {
-    alert("인증코드를 보냈습니다.");
-    isCheckData.setValue(true);
-    console.log(checkData.getCheckEmail);
-    originCheck.setValue(checkData.getCheckEmail);
-    setIsDialogOpen(true);
+    if (checkData.getCheckEmail === "") {
+     alert("이미 계정이 있는 이메일 입니다.");
+     isCheckData.setValue(true);
+    } else {
+     alert("인증코드를 보냈습니다.");
+     isCheckData.setValue(true);
+     console.log(checkData);
+     console.log(checkData.getCheckEmail);
+     originCheck.setValue(checkData.getCheckEmail);
+     setIsDialogOpen(true);
+    }
    }
   }
  }, [isCheckData]);
+
+ useEffect(() => {
+  if (!isNickNameData.value) {
+   if (nickNameData) {
+    if (nickNameData.getCheckNickName) {
+     alert("사용가능합니다.");
+     isNickName.setValue(true);
+     isNickNameData.setValue(true);
+    } else {
+     alert("이미 있는 닉네임입니다.");
+     inputNickName.setValue("");
+     isNickNameData.setValue(true);
+    }
+   }
+  }
+ }, [isNickNameData]);
 
  return (
   <MM01Presenter
@@ -183,6 +228,8 @@ const MM01Container = ({ history }) => {
    sendCheckCodeHandler={sendCheckCodeHandler}
    inputCheck={inputCheck}
    isCheck={isCheck}
+   checkNickNameHandler={checkNickNameHandler}
+   isNickName={isNickName}
   />
  );
 };

@@ -54,6 +54,8 @@ const MM01Presenter = ({
  sendCheckCodeHandler,
  inputCheck,
  isCheck,
+ checkNickNameHandler,
+ isNickName,
 }) => {
  return (
   <WholWrapper>
@@ -90,7 +92,16 @@ const MM01Presenter = ({
          <PText>닉네임</PText>
          <PText color={Theme.redColor}>*</PText>
         </Wrapper>
-        <CommonInput {...inputNickName} width={`200px`} padding={`10px`} borderBottom={`2px solid ${Theme.mainThemeColor}`} />
+        <Wrapper width={`220px`}>
+         <CommonInput {...inputNickName} width={`200px`} padding={`10px`} borderBottom={`2px solid ${Theme.mainThemeColor}`} />
+         {isNickName.value ? (
+          <BiCheck size={25} color={Theme.checkColor} />
+         ) : (
+          <CommonButton color={Theme.grayColor} width={`140px`} height={`20px`} onClick={() => checkNickNameHandler()}>
+           사용가능여부 확인하기
+          </CommonButton>
+         )}
+        </Wrapper>
        </Wrapper>
        <Wrapper width={`320px`} dr={`row`} ju={`space-between`} margin={`0 0 50px 100px`}>
         <Wrapper dr={`row`} width={`100px`} ju="flex-start">
@@ -127,14 +138,26 @@ const MM01Presenter = ({
          <PText>비밀번호</PText>
          <PText color={Theme.redColor}>*</PText>
         </Wrapper>
-        <CommonInput {...inputPassword} width={`200px`} padding={`10px`} borderBottom={`2px solid ${Theme.mainThemeColor}`} />
+        <CommonInput
+         type="password"
+         {...inputPassword}
+         width={`200px`}
+         padding={`10px`}
+         borderBottom={`2px solid ${Theme.mainThemeColor}`}
+        />
        </Wrapper>
        <Wrapper width={`320px`} dr={`row`} ju={`space-between`} margin={`0 0 50px 100px`}>
         <Wrapper dr={`row`} width={`100px`} ju="flex-start">
          <PText>비밀번호 확인</PText>
          <PText color={Theme.redColor}>*</PText>
         </Wrapper>
-        <CommonInput {...inputCheckedPassword} width={`200px`} padding={`10px`} borderBottom={`2px solid ${Theme.mainThemeColor}`} />
+        <CommonInput
+         type="password"
+         {...inputCheckedPassword}
+         width={`200px`}
+         padding={`10px`}
+         borderBottom={`2px solid ${Theme.mainThemeColor}`}
+        />
        </Wrapper>
       </Wrapper>
      </Wrapper>

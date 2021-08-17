@@ -58,6 +58,7 @@ const Header = ({ history }) => {
   loading: userLoading,
   refetch: userRefetch,
  } = useQuery(GET_USER, {
+  skip: userId ? false : true,
   variables: {
    id: userId,
   },

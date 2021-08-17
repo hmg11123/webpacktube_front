@@ -32,7 +32,7 @@ const MM02Presenter = ({ moveLinkHandler, loginHandler, inputEmail, inputPasswor
      </Wrapper>
      <Wrapper width={`290px`} dr={`row`} ju={`space-between`} margin={`0 0 50px 0px`}>
       <PText>비밀번호</PText>
-      <CommonInput width={`200px`} padding={`10px`} borderBottom={`2px solid ${Theme.mainThemeColor}`} {...inputPassword} />
+      <CommonInput type="password" width={`200px`} padding={`10px`} borderBottom={`2px solid ${Theme.mainThemeColor}`} {...inputPassword} />
      </Wrapper>
     </Wrapper>
     <Wrapper margin={`0 0 70px 0`} dr={`row`}>
