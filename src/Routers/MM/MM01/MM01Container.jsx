@@ -49,27 +49,27 @@ const MM01Container = ({ history }) => {
   history.push(`/${link}`);
  };
 
- const sendCheckCodeHandler = () => {
+ const sendCheckCodeHandler = useCallback(() => {
   if (!inputEmail.value || inputEmail.value.trim() === "") {
    alert("이메일은 필수 입력사항 입니다.");
    return;
   }
   isCheckData.setValue(false);
- };
+ }, [inputEmail, isCheckData]);
 
- const checkNickNameHandler = () => {
+ const checkNickNameHandler = useCallback(() => {
   if (!inputNickName.value || inputNickName.value.trim() === "") {
    alert("닉네임은 필수 입력사항 입니다.");
    return;
   }
   isNickNameData.setValue(false);
- };
+ }, [inputNickName, isNickNameData]);
 
- const _isDialogOpenToggle = () => {
+ const _isDialogOpenToggle = useCallback(() => {
   setIsDialogOpen(!isDialogOpen);
- };
+ }, [isDialogOpen]);
 
- const checkCodeHandler = () => {
+ const checkCodeHandler = useCallback(() => {
   console.log(originCheck.value);
   console.log(inputCheck.value);
   if (originCheck.value === inputCheck.value) {
@@ -79,7 +79,7 @@ const MM01Container = ({ history }) => {
   } else {
    alert("틀렸습니다.");
   }
- };
+ }, [originCheck, inputCheck, isCheck, isDialogOpen]);
 
  const fileChangeHandler = useCallback(
   async (e) => {

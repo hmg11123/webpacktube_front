@@ -5,6 +5,7 @@ export default createGlobalStyle`
     ${reset}
 
     *{
-        box-sizeing: border-box
+        overflow-x: hidden;
+        box-sizeing: border-box;
     }
 `;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { SearchBox, CommonButton, WholWrapper, Wrapper, Image, SearchIcon } from "../../Components/commonComponents";
 import styled from "styled-components";
 import Theme from "../../Styles/Theme";
@@ -33,11 +33,12 @@ const UserTapBox = styled(Wrapper)`
   border-style: solid;
   border-width: 0 13px 15px;
   border-color: ${Theme.mainThemeColor} transparent;
+  /* border-color: ${Theme.blackColor} transparent; */
   display: block;
   width: 0;
   z-index: 1;
-  top: -15px;
-  left: 51px;
+  top: 0px;
+  left: 52px;
  }
 `;
 
@@ -49,9 +50,10 @@ const Header = ({ history }) => {
   history.push(`/${link}`);
  };
 
- const tapClickHandler = () => {
+ const tapClickHandler = useCallback(() => {
+  console.log("클릭");
   setIsTapStatus(!isTapStatus);
- };
+ }, [isTapStatus]);
 
  const {
   data: userData,
@@ -67,6 +69,8 @@ const Header = ({ history }) => {
  const logoutClickHandler = async () => {
   sessionStorage.removeItem("AS23SF23SFEF3WA5");
   userRefetch();
+  history.push("/");
+  alert("로그아웃 하셨습니다.");
  };
  return (
   <WholWrapper dr={`row`} height={`70px`} bgColor={`#000`} color={`#fff`}>
@@ -81,7 +85,7 @@ const Header = ({ history }) => {
    </Wrapper>
    <Wrapper width={`25%`} dr={`row`} ju={`flex-end`}>
     {sessionStorage.getItem("AS23SF23SFEF3WA5") ? (
-     <Wrapper isRelative={true} height={`365px`}>
+     <Wrapper>
       <Image
        border={`2px solid ${Theme.mainThemeColor}`}
        width={`40px`}
@@ -90,31 +94,44 @@ const Header = ({ history }) => {
        src={userData ? userData.getUser.avatar : ""}
        onClick={() => tapClickHandler()}
       />
-      <UserTapBox
-       translate={`0.3s`}
-       display={isTapStatus ? `flex` : `none`}
-       width={`130px`}
-       height={`140px`}
-       bgColor={Theme.mainThemeColor}
-       isAbsolute={true}
-       bottom={`0`}
-       radius={`10px`}
-      >
-       <UserTapButton borderBottom={`2px solid ${Theme.whiteColor}`} color={Theme.whiteColor} margin={`10px`}>
-        영상추가하기
-       </UserTapButton>
-       <UserTapButton borderBottom={`2px solid ${Theme.whiteColor}`} color={Theme.whiteColor} margin={`10px`}>
-        마이페이지
-       </UserTapButton>
-       <UserTapButton
-        borderBottom={`2px solid ${Theme.whiteColor}`}
-        color={Theme.whiteColor}
-        margin={`10px`}
-        onClick={() => logoutClickHandler()}
+      <Wrapper width={`130px`} isAbsolute={true} height={`170px`} top={`0`} margin={`62px 0 0 0`}>
+       <UserTapBox
+        translate={`0.3s`}
+        display={isTapStatus ? `flex` : `none`}
+        width={`130px`}
+        height={`140px`}
+        bgColor={Theme.mainThemeColor}
+        radius={`10px`}
+        //    isAbsolute={true}
+        //    top={`0`}
+        //    margin={`90px 0 0 0`}
        >
-        로그아웃
-       </UserTapButton>
-      </UserTapBox>
+        <UserTapButton
+         borderBottom={`2px solid ${Theme.whiteColor}`}
+         color={Theme.whiteColor}
+         margin={`10px`}
+         onClick={() => moveLinkHander(`createVideo`)}
+        >
+         영상추가하기
+        </UserTapButton>
+        <UserTapButton
+         borderBottom={`2px solid ${Theme.whiteColor}`}
+         color={Theme.whiteColor}
+         margin={`10px`}
+         onClick={() => moveLinkHander(`mypage/${userId}`)}
+        >
+         마이페이지
+        </UserTapButton>
+        <UserTapButton
+         borderBottom={`2px solid ${Theme.whiteColor}`}
+         color={Theme.whiteColor}
+         margin={`10px`}
+         onClick={() => logoutClickHandler()}
+        >
+         로그아웃
+        </UserTapButton>
+       </UserTapBox>
+      </Wrapper>
      </Wrapper>
     ) : (
      <Wrapper dr={`row`}>

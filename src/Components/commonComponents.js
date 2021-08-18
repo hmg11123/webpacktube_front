@@ -18,7 +18,7 @@ export const WholWrapper = styled.div`
 `;
 
 export const RsWrapper = styled.div`
- width: 1350px;
+ width: 1450px;
  height: ${(props) => props.height};
  margin: ${(props) => props.margin};
  padding: ${(props) => props.padding};
@@ -48,6 +48,7 @@ export const Wrapper = styled.div`
  border-left: ${(props) => props.borderLeft};
  border-right: ${(props) => props.borderRight};
  border-radius: ${(props) => props.radius};
+ box-shadow: ${(props) => props.shadow};
  flex-wrap: ${(props) => props.wrap || `wrap`};
  position: ${(props) => (props.isAbsolute ? `absolute` : ``)};
  position: ${(props) => (props.isRelative ? `relative` : ``)};
@@ -80,15 +81,23 @@ export const PText = styled.p`
 `;
 
 export const SpanText = styled.span`
+ width: ${(props) => props.width};
  color: ${(props) => props.color};
  font-size: ${(props) => props.fontSize || `16px`};
  font-weight: ${(props) => props.fontWeight || `500`};
+
+ line-height: ${(props) => props.lineHeight || `16px`};
 
  border: ${(props) => props.border};
  border-bottom: ${(props) => props.borderBottom};
  border-top: ${(props) => props.borderTop};
  border-left: ${(props) => props.borderLeft};
  border-right: ${(props) => props.borderRight};
+
+ margin: ${(props) => props.margin};
+ padding: ${(props) => props.padding};
+
+ text-align: ${(props) => props.al};
 `;
 
 // =================== img ===================
@@ -242,4 +251,43 @@ export const SearchIcon = styled.button`
  height: ${(props) => props.height};
  border-bottom: 2px solid ${Theme.mainThemeColor};
  color: ${Theme.whiteColor};
+`;
+
+// ================ hamburger ================
+
+export const HamburgerBody = styled.ul`
+ width: ${(props) => props.width};
+ height: ${(props) => props.height};
+ padding: ${(props) => props.padding};
+ margin: ${(props) => props.margin || `80px 0 0 40px`};
+
+ background-color: ${(props) => props.bgColor};
+
+ border: ${(props) => props.border || `none`};
+ cursor: pointer;
+ display: flex;
+ flex-direction: ${(props) => props.dr || `column`};
+ align-items: ${(props) => props.al || `center`};
+ justify-content: ${(props) => props.ju || `center`};
+ border-bottom: ${(props) => props.borderBottom};
+ border-top: ${(props) => props.borderTop};
+ border-left: ${(props) => props.borderLeft};
+ border-right: ${(props) => props.borderRight};
+ border-radius: ${(props) => props.radius};
+
+ top: 0;
+ left: 0;
+ position: fixed;
+`;
+
+export const HamburgerLine = styled.li`
+ width: ${(props) => props.width};
+ height: ${(props) => props.height};
+ padding: ${(props) => props.padding};
+ margin: ${(props) => props.margin};
+
+ background-color: ${(props) => props.bgColor};
+ border: ${(props) => props.border || `none`};
+ cursor: pointer;
+ border-radius: ${(props) => props.radius};
 `;
